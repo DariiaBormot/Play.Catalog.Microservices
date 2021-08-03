@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +26,8 @@ namespace Play.Catalog.Service
             serviceSettings = Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
 
             services.AddMongo()
-                    .AddMongoRepository<Item>("items");
+                    .AddMongoRepository<Item>("items")
+                    .AddMassTransitWithRabbitMQ();
 
             services.AddControllers( optops =>
             {

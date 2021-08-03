@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Play.Common.Contracts;
-using Play.Inventory.Service.Clients;
 using Play.Inventory.Service.DtoModels;
 using Play.Inventory.Service.Extensions;
 using Play.Inventory.Service.Models;
@@ -16,11 +15,12 @@ namespace Play.Inventory.Service.Controllers
     public class InventoryItemController : ControllerBase
     {
         private readonly IRepository<InventoryItem> _inventoryRepository;
-        private readonly CatalogClient _catalogClient;
-        public InventoryItemController(IRepository<InventoryItem> inventoryRepository, CatalogClient catalogClient)
+        private readonly IRepository<CatalogItem> _catalogRepository;
+
+        public InventoryItemController(IRepository<InventoryItem> inventoryRepository, IRepository<CatalogItem> catalogRepository)
         {
             _inventoryRepository = inventoryRepository;
-            _catalogClient = catalogClient;
+            _catalogRepository = catalogRepository;
         }
 
         [HttpGet]
@@ -31,8 +31,9 @@ namespace Play.Inventory.Service.Controllers
                 return BadRequest();
             }
 
-            var catalogItems = await _catalogClient.GetCatalogItemsAsync();
             var inventoryItems = await _inventoryRepository.FilterAllAsync(item => item.UserId == userId);
+            var itemIds = inventoryItems.Select(item => item.CatalogItemId);
+            var catalogItems = await _catalogRepository.FilterAllAsync(item => itemIds.Contains(item.Id));
 
             var inventoryItemDtos = inventoryItems.Select(item =>
             {

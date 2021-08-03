@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Play.Catalog.Service", "Pla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Play.Common", "Play.Common\src\Play.Common\Play.Common.csproj", "{1FAF9844-9176-44C1-BE98-2EC29F8201C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Catalog.Contracts", "Play.Catalog.Contracts\Play.Catalog.Contracts.csproj", "{14F0EEC1-758B-4036-B643-BE1004E3C896}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1FAF9844-9176-44C1-BE98-2EC29F8201C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FAF9844-9176-44C1-BE98-2EC29F8201C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FAF9844-9176-44C1-BE98-2EC29F8201C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14F0EEC1-758B-4036-B643-BE1004E3C896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14F0EEC1-758B-4036-B643-BE1004E3C896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14F0EEC1-758B-4036-B643-BE1004E3C896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14F0EEC1-758B-4036-B643-BE1004E3C896}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
