@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Play.Common.Extensions;
 using Play.Common.Extentions;
 using Play.Inventory.Service.Clients;
 using Play.Inventory.Service.Models;
@@ -36,7 +31,8 @@ namespace Play.Inventory.Service
             services.AddMongo()
                     .AddMongoRepository<InventoryItem>("InventoryItems")
                     .AddMongoRepository<CatalogItem>("CatalogItems")
-                    .AddMassTransitWithRabbitMQ();
+                    .AddMassTransitWithRabbitMQ()
+                    .AddJwtBearerAuthentication();
 
             AddCatalogClient(services);
 
@@ -67,6 +63,8 @@ namespace Play.Inventory.Service
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

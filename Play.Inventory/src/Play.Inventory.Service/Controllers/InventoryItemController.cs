@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Play.Common.Contracts;
 using Play.Inventory.Service.DtoModels;
 using Play.Inventory.Service.Extensions;
@@ -12,6 +13,7 @@ namespace Play.Inventory.Service.Controllers
 {
     [ApiController]
     [Route("inventory")]
+    [Authorize]
     public class InventoryItemController : ControllerBase
     {
         private readonly IRepository<InventoryItem> _inventoryRepository;
