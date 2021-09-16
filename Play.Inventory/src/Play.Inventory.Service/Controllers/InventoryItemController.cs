@@ -7,15 +7,17 @@ using Play.Inventory.Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Play.Inventory.Service.Controllers
 {
     [ApiController]
     [Route("inventory")]
-    [Authorize]
     public class InventoryItemController : ControllerBase
     {
+        private const string AdminRole = "Admin";
+
         private readonly IRepository<InventoryItem> _inventoryRepository;
         private readonly IRepository<CatalogItem> _catalogRepository;
 
@@ -33,6 +35,15 @@ namespace Play.Inventory.Service.Controllers
                 return BadRequest();
             }
 
+            var currentUserId = User.FindFirstValue("sub");
+            if (Guid.Parse(currentUserId) != userId)
+            {
+                if (!User.IsInRole(AdminRole))
+                {
+                    return Unauthorized();
+                }
+            }
+
             var inventoryItems = await _inventoryRepository.FilterAllAsync(item => item.UserId == userId);
             var itemIds = inventoryItems.Select(item => item.CatalogItemId);
             var catalogItems = await _catalogRepository.FilterAllAsync(item => itemIds.Contains(item.Id));
@@ -46,6 +57,7 @@ namespace Play.Inventory.Service.Controllers
             return Ok(inventoryItemDtos);
         }
 
+        [Authorize(Roles = AdminRole)]
         [HttpPost]
         public async Task<ActionResult> PostAsync(GrandItemsDto grantItemsDto)
         {
