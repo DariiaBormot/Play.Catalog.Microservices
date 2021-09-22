@@ -1,4 +1,4 @@
-n# Play.Frontend
+# Play.Frontend
 React based frontend for the Play Economy system. 
 
 ## Prerequisites
